@@ -8,8 +8,8 @@ class ChartsController < ApplicationController
     if !User.current.allowed_to?(:view_charts, @project)
       render_404
     else
-      @my_charts = Chart.where('project_id = ? AND user_id = ? AND is_public = false', @project.id, User.current.id).order(:name)
-      @public_charts = Chart.where('project_id = ? AND is_public = true', @project.id).order(:name)
+      @my_charts = Chart.where('project_id = ? AND user_id = ? AND is_public = ?', @project.id, User.current.id, false).order(:name)
+      @public_charts = Chart.where('project_id = ? AND is_public = ?', @project.id, true).order(:name)
     end
   end
 
